@@ -1,1 +1,1 @@
-Word.create!(title: '西小倉宏信')
+# TODO fetch from other server

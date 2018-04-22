@@ -23,11 +23,11 @@ class Word < ApplicationRecord
   end
 
   def parents
-    parent_links.map{|link| link.parent}.sort{|a, b| b.child_count <=> a.child_count}
+    parent_links.includes(:parent).map{|link| link.parent}.sort{|a, b| b.child_count <=> a.child_count}
   end
 
   def children
-    child_links.map{|link| link.child}.sort{|a, b| b.child_count <=> a.child_count}
+    child_links.includes(:child).map{|link| link.child}.sort{|a, b| b.child_count <=> a.child_count}
   end
 
   def total_count
