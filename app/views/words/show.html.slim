@@ -1,0 +1,37 @@
+= link_to 'TOP', word_path(Word.find(1))
+
+
+
+hr/
+= link_to 'Google', "https://www.google.com/search?q=#{URI.encode(@word.title)}", target: '_blank'
+hr/
+p#notice= notice
+- if @word.errors.any?
+  #error_explanation
+    h2
+      = pluralize(@word.errors.count, "error")
+      | prohibited this word from being saved:
+    ul
+      - @word.errors.full_messages.each do |message|
+        li= message
+= form_for(@word) do |f|
+  p
+    - if @word.id != 1
+      - @word.parents.each do |word|
+        = word_link_to(word)
+  h1= @word.title
+  /!
+    | <div class="field"
+    | <haml_loud> f.text_field :body, style: &#39;font-size: 30px; width: 800px;&#39; </haml_loud
+    | </div
+
+  - @word.children.each do |child|
+    span style='padding: 7px;'
+      = word_link_to(child)
+
+  /- @word.children.each do |child|
+    h2= word_link_to(child)
+    - child.children.each do |grandson|
+      = word_link_to(grandson)
+  = f.text_field :child_title
+
