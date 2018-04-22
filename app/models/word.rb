@@ -20,7 +20,8 @@ class Word < ApplicationRecord
   end
 
   def child_count
-    children.count
+    # children.count
+    0
   end
 
   def expand(params, user_id)
