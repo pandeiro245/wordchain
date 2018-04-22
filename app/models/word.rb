@@ -50,6 +50,7 @@ class Word < ApplicationRecord
       title: title,
       user_id: user_id
     )
+
     case type
     when 'parent'
       parent_word_id = word.id
