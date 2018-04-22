@@ -21,8 +21,11 @@ ActiveRecord::Schema.define(version: 20180421073300) do
 
   create_table "users", force: :cascade do |t|
     t.string "twitter_id"
+    t.string "image_url"
+    t.integer "word_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["word_id"], name: "index_users_on_word_id"
   end
 
   create_table "words", force: :cascade do |t|

@@ -1,4 +1,4 @@
-= link_to 'TOP', word_path(Word.find(1))
+= link_to 'TOP', word_path(User.find(cookies[:user_id]).word)
 
 
 
@@ -16,9 +16,11 @@ p#notice= notice
         li= message
 = form_for(@word) do |f|
   p
-    - if @word.id != 1
+    -# if @word.id != 1
+    - if true
       - @word.parents.each do |word|
         = word_link_to(word)
+      -#= f.text_field :parent_title
   h1= @word.title
   /!
     | <div class="field"

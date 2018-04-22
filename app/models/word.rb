@@ -1,5 +1,6 @@
 class Word < ApplicationRecord
   attr_accessor :parent_title, :child_title
+  belongs_to :user
   has_many :parent_links, class_name: 'Link', foreign_key: 'child_word_id'
   has_many :child_links, class_name: 'Link', foreign_key: 'parent_word_id'
   def parents
@@ -22,20 +23,21 @@ class Word < ApplicationRecord
     children.count
   end
 
-  def expand(params)
+  def expand(params, user_id)
     if params[:parent_title].present?
-      update_link('parent', params[:parent_title])
+      update_link('parent', params[:parent_title], user_id)
     end
 
     if params[:child_title].present?
-      update_link('child', params[:child_title])
+      update_link('child', params[:child_title], user_id)
     end
     update(params)
   end
 
-  def update_link(type, title)
+  def update_link(type, title, user_id)
     word = Word.find_or_create_by(
-      title: title
+      title: title,
+      user_id: user_id
     )
     case type
     when 'parent'
