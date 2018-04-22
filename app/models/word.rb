@@ -3,25 +3,35 @@ class Word < ApplicationRecord
   belongs_to :user
   has_many :parent_links, class_name: 'Link', foreign_key: 'child_word_id'
   has_many :child_links, class_name: 'Link', foreign_key: 'parent_word_id'
+
+  def own(user)
+    Word.find_or_create_by(
+      title: title,
+      user: user
+    )
+  end
+
+  def self.update_child_counts
+    self.all.each do |word|
+      word.update_child_count
+    end
+  end
+  
+  def update_child_count
+    self.child_count = child_links.count
+    self.save!
+  end
+
   def parents
-    parent_links.sort{|a, b| b.parent.child_count <=> a.parent.child_count}.map{|link| link.parent}
+    parent_links.map{|link| link.parent}.sort{|a, b| b.child_count <=> a.child_count}
   end
 
   def children
-    child_links.sort{|a, b| b.child.child_count <=> a.child.child_count}.map{|link| link.child}
+    child_links.map{|link| link.child}.sort{|a, b| b.child_count <=> a.child_count}
   end
 
   def total_count
     parent_count + child_count
-  end
-
-  def parent_count
-    parents.count
-  end
-
-  def child_count
-    # children.count
-    0
   end
 
   def expand(params, user_id)

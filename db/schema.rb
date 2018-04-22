@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180421073300) do
+ActiveRecord::Schema.define(version: 20180422145216) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "links", force: :cascade do |t|
     t.integer "parent_word_id"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20180421073300) do
   create_table "users", force: :cascade do |t|
     t.string "twitter_id"
     t.string "image_url"
-    t.integer "word_id"
+    t.bigint "word_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["word_id"], name: "index_users_on_word_id"
@@ -31,9 +34,11 @@ ActiveRecord::Schema.define(version: 20180421073300) do
   create_table "words", force: :cascade do |t|
     t.string "title"
     t.string "body"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "parent_count"
+    t.integer "child_count"
     t.index ["user_id"], name: "index_words_on_user_id"
   end
 

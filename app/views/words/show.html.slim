@@ -1,14 +1,14 @@
-= link_to 'TOP', word_path(User.find(cookies[:user_id]).word)
-
-
-
-hr/
-= link_to 'Google', "https://www.google.com/search?q=#{URI.encode(@word.title)}", target: '_blank'
-= link_to '英辞郎', "https://eow.alc.co.jp/search?q=#{URI.encode(@word.title)}", target: '_blank'
-= link_to 'Wikipedia(en)', "https://en.wikipedia.org/wiki/#{URI.encode(@word.title)}", target: '_blank'
-= link_to 'Wikipedia(ja)', "https://ja.wikipedia.org/wiki/#{URI.encode(@word.title)}", target: '_blank'
-
-hr/
+/
+  - if cookies[:user_id].present?
+    = link_to 'TOP', word_path(User.find(cookies[:user_id]).word)
+  - else
+    = link_to 'LOGIN', '/auth/twitter'
+  hr
+  = link_to 'Google', "https://www.google.com/search?q=#{URI.encode(@word.title)}", target: '_blank'
+  = link_to '英辞郎', "https://eow.alc.co.jp/search?q=#{URI.encode(@word.title)}", target: '_blank'
+  = link_to 'Wikipedia(en)', "https://en.wikipedia.org/wiki/#{URI.encode(@word.title)}", target: '_blank'
+  = link_to 'Wikipedia(ja)', "https://ja.wikipedia.org/wiki/#{URI.encode(@word.title)}", target: '_blank'
+  hr/
 p#notice= notice
 - if @word.errors.any?
   #error_explanation

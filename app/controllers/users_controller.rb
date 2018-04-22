@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+  def index
+    @users = User.limit(100)
+  end
+
   def show
     @word = Word.find(1)
     render 'words/show'
