@@ -25,7 +25,9 @@ p#notice= notice
       - @word.parents.each do |word|
         = word_link_to(word)
       -#= f.text_field :parent_title
-  h1= @word.title
+  h1
+    = link_to(image_tag(@word.user.image_url), word_path(@word.user.word))
+    = @word.title
   /!
     | <div class="field"
     | <haml_loud> f.text_field :body, style: &#39;font-size: 30px; width: 800px;&#39; </haml_loud

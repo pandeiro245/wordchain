@@ -1,3 +1,29 @@
+h1 WordChain（ワードチェイン）
+p WordChain（ワードチェイン）はTwitter, Facebook, Instagramでログインするだけであなたの中にあるキーワードを抽出し、他の人のキーワードと繋がる事ができるサービスです
+
+ul
+  li= link_to 'Facebookログイン', '/auth/twitter'
+  li= link_to 'Instagramログイン', '/auth/twitter'
+  li= link_to 'Twitterログイン', '/auth/twitter'
+
+
+h2 人気ワード
+ul
+  - Word.order('id desc').limit(10).each do |word|
+    li
+      = link_to(image_tag(word.user.image_url), word_path(word.user.word))
+      = link_to word.title, word_path(word)
+h2 新着ワード
+ul
+  - Word.order('id desc').limit(10).each do |word|
+    li
+      = link_to(image_tag(word.user.image_url), word_path(word.user.word))
+      = link_to word.title, word_path(word)
+
+
+h2 人気ユーザ
 ul
   - @users.each do |user|
-    li= link_to user.word.title, word_path(user.word)
+    li
+      = image_tag(user.image_url)
+      = link_to user.word.title, word_path(user.word)
